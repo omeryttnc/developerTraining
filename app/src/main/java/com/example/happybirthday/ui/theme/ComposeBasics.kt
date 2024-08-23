@@ -12,11 +12,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,8 +33,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -271,16 +281,84 @@ class ComposeBasics : ComponentActivity() {
     }
 
     @Composable
-    @Preview(showBackground = true)
-    fun DiceRollPreview() {
-        DiceRoll()
+    fun LemonTree(
+
+    ) {
+        Box(
+            modifier = Modifier
+        ) {
+
+            Text(
+                text = stringResource(id = R.string.lemonade),
+                textAlign = TextAlign.Center,
+                fontSize = 48.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Yellow)
+
+            )
+            LemonPage {
+
+            }
+        }
     }
 
+    @Composable
+    fun LemonPage(
+        modifier: Modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.Center),
+        onImageClick: () -> Unit
+    ) {
+        var currentStep by remember { mutableStateOf(1) }
+
+        var squeezeCount by remember { mutableStateOf(0) }
+
+        Column(modifier = modifier) {
+            Button(
+                onClick = { onImageClick() },
+                shape = RoundedCornerShape(dimensionResource(R.dimen.button_corner_radius)),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+                modifier = Modifier
+            ) {
+                Image(
+                    painter = painterResource(
+                        id = R.drawable.lemon_tree
+                    ),
+                    contentDescription = stringResource(id = R.string.lemon1_content),
+                    modifier = Modifier
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(16.dp)
+                    .background(Color.Red)
+            )
+            Text(
+                text = stringResource(id = R.string.lemon1),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+
+    @Composable
+    @Preview(showBackground = true)
+    fun LemonTreePreview() {
+        LemonTree()
+    }
 
     @Composable
     @Preview(showBackground = true)
     fun BussinessCardPreview() {
         BussinessCard()
+    }
+
+    @Composable
+    @Preview(showBackground = true)
+    fun DiceRollPreview() {
+        DiceRoll()
     }
 
 
